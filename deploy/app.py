@@ -21,11 +21,11 @@ def load_model():
     response.raise_for_status()
     return joblib.load(BytesIO(response.content))
 
-model = load_model()
-
 @app.route("/", methods=["GET", "POST"])
 def home():
-
+    
+    model = load_model()
+    
     if request.method == "POST":
         lyric = request.form.get("lyric", "").strip()
         album = model.predict([lyric])[0] if lyric else None

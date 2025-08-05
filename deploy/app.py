@@ -20,9 +20,17 @@ model = None
 def load_model():
     global model
     if model is None:
+        print("Downloading model...")
         response = requests.get(MODEL_URL)
+        print(f"Status code: {response.status_code}")
         response.raise_for_status()
-        model = joblib.load(BytesIO(response.content))
+        print("Loading model...")
+        try:
+            model = joblib.load(BytesIO(response.content))
+        except Exception as e:
+            print(e)
+            print(response.content[:500])
+            raise
     return model
 
 @app.route("/", methods=["GET", "POST"])

@@ -15,20 +15,24 @@ print("Created app")
 # Load model
 
 MODEL_URL = "https://myawsbucketjoblib.s3.us-east-2.amazonaws.com/best_model.joblib"
+model = None
 
 def load_model():
-    response = requests.get(MODEL_URL)
-    response.raise_for_status()
-    return joblib.load(BytesIO(response.content))
+    global model
+    if model is None:
+        response = requests.get(MODEL_URL)
+        response.raise_for_status()
+        model = joblib.load(BytesIO(response.content))
+    return model
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     
-    model = load_model()
+    clf = load_model()
     
     if request.method == "POST":
         lyric = request.form.get("lyric", "").strip()
-        album = model.predict([lyric])[0] if lyric else None
+        album = clf.predict([lyric])[0] if lyric else None
         session["album"] = album
         session["lyric"] = lyric
         return redirect(url_for("home"))

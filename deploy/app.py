@@ -15,28 +15,17 @@ print("Created app")
 # Load model
 
 MODEL_URL = "https://myawsbucketjoblib.s3.us-east-2.amazonaws.com/best_model.joblib"
-model = None
 
 def load_model():
-    global model
-    if model is None:
-        print("Downloading model...")
-        response = requests.get(MODEL_URL)
-        print(f"Status code: {response.status_code}")
-        response.raise_for_status()
-        print("Loading model...")
-        try:
-            model = joblib.load(BytesIO(response.content))
-        except Exception as e:
-            print(e)
-            print(response.content[:500])
-            raise
+    response = requests.get(MODEL_URL)
+    response.raise_for_status()
+    model = joblib.load(BytesIO(response.content))
     return model
+
+clf = load_model()
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-    
-    clf = load_model()
     
     if request.method == "POST":
         lyric = request.form.get("lyric", "").strip()

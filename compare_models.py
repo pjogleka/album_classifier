@@ -96,33 +96,33 @@ for i, (clf_name, clf) in enumerate(models.items()):
     print(classification_report(y_test, y_pred, zero_division=0))
 
 best_grid = np.argmax(acc_scores)
-joblib.dump(grids[best_grid], "best_model.joblib")
+joblib.dump(grids[best_grid], "best_model.joblib", compress=9)
 
-# Grouped bar chart using plt docs example
-model_names = list(models.keys())
-model_scores = {
-    "Accuracy": np.around(acc_scores, decimals=2),
-    "ROC AUC": np.around(roc_auc_scores, decimals=2),
-    "CV": np.around(cv_scores, decimals=2)
-    }
+# # Grouped bar chart using plt docs example
+# model_names = list(models.keys())
+# model_scores = {
+#     "Accuracy": np.around(acc_scores, decimals=2),
+#     "ROC AUC": np.around(roc_auc_scores, decimals=2),
+#     "CV": np.around(cv_scores, decimals=2)
+#     }
 
-x = np.arange(len(model_names))
-width = 0.25
-multiplier = 0
+# x = np.arange(len(model_names))
+# width = 0.25
+# multiplier = 0
 
-fig, ax = plt.subplots(layout="constrained")
+# fig, ax = plt.subplots(layout="constrained")
 
-for model, score in model_scores.items():
-    offset = width * multiplier
-    rects = ax.bar(x + offset, score, width, label=model)
-    ax.bar_label(rects, padding=3)
-    multiplier += 1
+# for model, score in model_scores.items():
+#     offset = width * multiplier
+#     rects = ax.bar(x + offset, score, width, label=model)
+#     ax.bar_label(rects, padding=3)
+#     multiplier += 1
 
-ax.set_ylabel('Score')
-ax.set_title('Model Performance Comparison')
-ax.set_xticks(x + width, model_names)
-ax.set_ylim(0, 1)
-ax.legend(loc="upper right")
+# ax.set_ylabel('Score')
+# ax.set_title('Model Performance Comparison')
+# ax.set_xticks(x + width, model_names)
+# ax.set_ylim(0, 1)
+# ax.legend(loc="upper right")
 
-plt.savefig("plots/model_comp.png", dpi=300)
-plt.show()
+# plt.savefig("plots/model_comp.png", dpi=300)
+# plt.show()

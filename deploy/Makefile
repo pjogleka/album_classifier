@@ -6,7 +6,7 @@ build:
 	docker build -t $(IMAGE_NAME) .
 
 run:
-	docker run -it -p 80:8000 --memory="512m" --cpus="1" --restart unless-stopped --name lyrics-container lyrics-app
+	docker run -it -p 8000:8000 --memory="512m" --cpus="1" --restart unless-stopped --name lyrics-container lyrics-app
 
 stop:
 	docker stop $(CONTAINER_NAME) || true

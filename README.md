@@ -15,7 +15,7 @@ This project is a random forest classifier that predicts which Taylor Swift albu
       + SGD Classifier
       + Shallow neural network (PyTorch)
   * Tuning: grid search over key parameters
-  * Final model: random Forest with ~37% test accuracy
+  * Final model: random forest with ~37% test accuracy
 - Deployment
   * App: Flask backend with a simple web UI
   * Model serving: Gunicorn WSGI server
